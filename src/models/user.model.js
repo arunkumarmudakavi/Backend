@@ -51,7 +51,7 @@ const userSchema = new Schema(
     }
 )
 
-// mongoose middleware
+// pre hook is an  mongoose middleware plugin
 userSchema.pre("save", async function (next) {
     if(this.isModified("password")){
         this.password = bcrypt.hash(this.password, )
