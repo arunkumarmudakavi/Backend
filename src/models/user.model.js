@@ -4,7 +4,7 @@ import bcrypt from "bcrypt"
 
 const userSchema = new Schema(
     {
-        userName: {
+        username: {
             type: String,
             required: true,
             unique: true,
@@ -52,9 +52,10 @@ const userSchema = new Schema(
 )
 
 // pre hook is an  mongoose middleware plugin
+// don't use callback function here (() => {}) bcz it doesn't knew the this reference
 userSchema.pre("save", async function (next) {
     if(this.isModified("password")){
-        this.password = bcrypt.hash(this.password, )
+        this.password = await bcrypt.hash(this.password, 10)
         next()
     }
 
@@ -62,7 +63,7 @@ userSchema.pre("save", async function (next) {
 
     // if(!this.isModified("password")) return next();
 
-    // this.password = bcrypt.hash(this.password, )
+    // this.password = bcrypt.hash(this.password, 10)
     // next()
 })
 
