@@ -165,8 +165,8 @@ const logoutUser = asyncHandler(async(req, res) => {
     req.user._id,
     {
       //set is an mongodb operator
-      $set: {
-        refreshToken: undefined
+      $unset: {
+        refreshToken: 1 // this removes the field from document
       }
     },
     // doing this the returned response will be new updated value
@@ -270,6 +270,7 @@ const changeCurrentPassword = asyncHandler(async(req, res) => {
 })
 
 const getCurrentUser = asyncHandler(async(req, res) => {
+  // console.log(req.user);
   return res
   .status(200)
   .json(
